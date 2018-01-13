@@ -29,6 +29,11 @@ const policeIcon = L.icon({
     iconSize: [32, 32],
 })
 
+const treasureIcon = L.icon({
+    iconUrl: '../heatmap/img/treasure.png',
+    iconSize: [32, 32],
+})
+
 @inject('store')
 @observer
 export class Heatmap extends Widget {
@@ -41,19 +46,23 @@ export class Heatmap extends Widget {
                     points={data}
                     longitudeExtractor={m => m.lon}
                     latitudeExtractor={m => m.lat}
-                    intensityExtractor={m => m.count} />
+                    intensityExtractor={m => m.count / 25} />
                 <TileLayer
                     url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png'
                     attribution='<a href="http://cartodb.com/attributions">CartoDB</a>'
         />
         <Marker
             position={this.props.store.game.police.position}
-        icon={policeIcon}
+            icon={policeIcon}
         />
         <Marker
             position={this.props.store.game.thief.position}
             icon={thiefIcon}
         />
+        {this.props.store.game.drops.map(pos => {return <Marker
+            position={pos}
+            icon={treasureIcon}
+            />})}
             </Map>
         </div>
     }

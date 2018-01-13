@@ -41,7 +41,7 @@ io.on('connect', (socket: Socket) => {
 
 function message (socket: Socket) {
     return function (data: any) {
-        //should not happen, that ought to be one way
+        // should not happen, that ought to be one way
         console.log('[server](message): %s', JSON.stringify(data))
         socket.send('return')
     }
@@ -62,8 +62,13 @@ function broadcast () {
     })
 }
 
-app.get('/', (request, response) => {
-    game = applyAction(game, { player: game.police, deed: Deed.Running, arguments: [] })
+app.get('/:player/:action/:argument', (request, response) => {
+    let playerId = request.params.player
+    let player = playerId == 0 ? game.police : game.thief
+    let action = request.params.action as Deed
+    let argument = request.params.argument
+    game = applyAction(game, { player: game.police, deed: action, argument: argument })
+    let distance = Math.min(game.distance > 0.03 ? game.distance * 255 : 0, 255)
+    response.send(JSON.stringify(Math.floor(distance)))
     broadcast()
-    response.send('Hello from Express!')
 })
