@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<title>Chicago Crime Map</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+	      integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+	      crossorigin=""/>
+	<style>
+	 body {
+	     padding: 0;
+	     margin: 0;
+	 }
+	 html, body, #map {
+	     height: 100%;
+	     width: 100%;
+	 }
+	</style>
+    </head>
+    <body>
+      <div id="map"></div>
+      <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+	      integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+	      crossorigin=""></script>
+      <script src="js/leaflet-providers.js"></script>
+      <script src="js/heatmap.min.js"></script>
+      <script src="js/leaflet-heatmap.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.AnimatedMarker/1.0.0/AnimatedMarker.min.js"></script>
+      
+      <script src="crimes_count.json" type="text/javascript"></script>
+      <script src="path.json" type="text/javascript"></script>
+
+      <script src="map.js" type="text/javascript"></script>
+    </body>
+</html>
