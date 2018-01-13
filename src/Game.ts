@@ -2,7 +2,7 @@ import { observable, computed } from 'mobx'
 import * as  _ from 'lodash'
 import * as dropData from '../heatmap/moneydrops.json'
 
-const drops = (dropData as any).map(p => pos(p[1],p[0]))
+const drops = (dropData as any).map(p => pos(p[0],p[1]))
 
 function drop (): Position {
     return drops[Math.floor(Math.random() * drops.length)]

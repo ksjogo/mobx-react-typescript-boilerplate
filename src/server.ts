@@ -68,7 +68,7 @@ app.get('/:player/:action/:argument', (request, response) => {
     let action = request.params.action as Deed
     let argument = request.params.argument
     game = applyAction(game, { player: game.police, deed: action, argument: argument })
-    let distance = Math.min(game.distance > 0.03 ? game.distance * 255 : 0, 255)
+    let distance = Math.min(game.distance > 0.01 ? game.distance * 255 : 0, 255)
     response.send(JSON.stringify(Math.floor(distance)))
     broadcast()
 })
