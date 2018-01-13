@@ -10,7 +10,7 @@ import * as data from '../heatmap/crimes_count.json'
 
 import '../node_modules/leaflet/dist/leaflet.css'
 
-import * as L from 'leaflet';
+import * as L from 'leaflet'
 
 /* delete L.Icon.Default.prototype._getIconUrl;
  * L.Icon.Default.mergeOptions({
@@ -19,6 +19,17 @@ import * as L from 'leaflet';
  *     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
  * });
  * */
+
+const thiefIcon = L.icon({
+    iconUrl: '../heatmap/img/thief.png',
+    iconSize: [32, 32],
+})
+
+const policeIcon = L.icon({
+    iconUrl: '../heatmap/img/policeman.png',
+    iconSize: [32, 32],
+})
+
 @inject('store')
 @observer
 export class Heatmap extends Widget {
@@ -26,18 +37,23 @@ export class Heatmap extends Widget {
         return <div>
             <Map center={[41.84,-87.67]} zoom={12} style={{height: '100%', width: '100%'}}>
                 <HeatmapLayer
-
                     fitBoundsOnLoad
                     fitBoundsOnUpdate
                     points={data}
-
                     longitudeExtractor={m => m.lon}
                     latitudeExtractor={m => m.lat}
                     intensityExtractor={m => m.count} />
-
                 <TileLayer
                     url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png'
                     attribution='<a href="http://cartodb.com/attributions">CartoDB</a>'
+        />
+        <Marker
+            position={this.props.store.game.police.position}
+        icon={policeIcon}
+        />
+        <Marker
+            position={this.props.store.game.thief.position}
+            icon={thiefIcon}
         />
             </Map>
         </div>

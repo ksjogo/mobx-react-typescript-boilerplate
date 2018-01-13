@@ -9,8 +9,8 @@ export class Interface extends Widget {
     render () {
         return (
             <div>
-                <Heatmap />
-                {this.props.store.timer}
+            {this.props.store.ready && <Heatmap />}
+            {this.props.store.timer}
             </div>
         )
     }

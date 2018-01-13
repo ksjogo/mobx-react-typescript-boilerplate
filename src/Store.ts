@@ -7,7 +7,9 @@ import { Message, MessageType } from './Message'
 export class Store {
     @observable timer = 0
 
-    @observable game: Game = null
+    @observable.deep game: Game = null
+
+    @observable ready = false
 
     private socket: SocketIOClient.Socket
 
@@ -25,13 +27,15 @@ export class Store {
         this.socket.send('something')
     }
 
+    @autobind
     message (msg: Message) {
         switch (msg.type) {
             case MessageType.Notify:
                 console.log('[client](message): %s', JSON.stringify(msg.data))
                 break
             case MessageType.GameState:
-                this.game =  JSON.parse(msg.data)
+                this.game = JSON.parse(msg.data)
+                this.ready = true
                 break
         }
     }

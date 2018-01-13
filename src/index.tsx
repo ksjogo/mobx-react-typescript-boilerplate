@@ -15,6 +15,6 @@ ReactDOM.render(
         <Provider store={store}>
             <Interface />
         </Provider>
-    <DevTools />
+        <DevTools />
     </div>,
     document.getElementById('root'))

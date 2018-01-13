@@ -1,8 +1,35 @@
 import { observable } from 'mobx'
+import { type } from 'os';
 
-export enum Player {
+export enum PlayerType {
     Police = 1,
     Criminal = 2,
+}
+
+type Position = {lat: Number, lng: Number}
+function pos (y, x): Position {
+    return {lat: y, lng: x}
+}
+
+export class Player {
+    type: PlayerType
+    position: Position
+}
+
+export class Thief extends Player {
+    type = PlayerType.Criminal
+    position = pos(41.88, -87.67)
+}
+
+export class Police extends Player {
+    type = PlayerType.Police
+    position = pos(41.82, -87.61)
+}
+
+export class Game {
+    @observable count = 0
+    @observable police = new Police()
+    @observable thief = new Thief()
 }
 
 export enum Deed {
@@ -16,13 +43,7 @@ export class Action {
     arguments: number[]
 }
 
-export class Game {
-    @observable count = 0
-    @observable position = 0
-    @observable position2 = 0
-}
-
 export function applyAction (game: Game, action: Action): Game {
     game.count++
-    return game
+                return game
 }

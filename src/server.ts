@@ -57,12 +57,13 @@ function disconnect (socket: Socket) {
 function broadcast () {
     const data: Message = { type: MessageType.GameState, data: JSON.stringify(game) }
     sockets.forEach(s => {
+        console.log("broaded")
         s.send(data)
     })
 }
 
 app.get('/', (request, response) => {
-    game = applyAction(game, { player: Player.Police, deed: Deed.Running, arguments: [] })
+    game = applyAction(game, { player: game.police, deed: Deed.Running, arguments: [] })
     broadcast()
     response.send('Hello from Express!')
 })
