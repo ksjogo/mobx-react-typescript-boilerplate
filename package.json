@@ -39,7 +39,11 @@
     "autobind": "^1.0.3",
     "autobind-decorator": "^2.1.0",
     "cors": "^2.8.4",
+    "css-loader": "^0.28.8",
     "express": "^4.16.2",
+    "file-loader": "^1.1.6",
+    "json-loader": "^0.5.7",
+    "leaflet": "^1.2.0",
     "lodash": "^4.17.4",
     "lodash-decorators": "^4.5.0",
     "mobx": "^3.2.1",
@@ -47,9 +51,14 @@
     "mobx-react-devtools": "^4.2.15",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-heatmap.js": "^1.0.0",
+    "react-leaflet": "^1.7.8",
+    "react-leaflet-heatmap-layer": "^1.0.3",
     "socket.io": "^2.0.4",
+    "style-loader": "^0.19.1",
     "ts-node": "^4.1.0",
     "tslint": "^5.9.1",
-    "tslint-config-standard": "^7.0.0"
+    "tslint-config-standard": "^7.0.0",
+    "url-loader": "^0.6.2"
   }
 }

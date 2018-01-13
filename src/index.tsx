@@ -1,11 +1,12 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { observable } from 'mobx'
-import { observer, Provider } from 'mobx-react'
+import { Provider } from 'mobx-react'
 
 import DevTools from 'mobx-react-devtools'
-import { Interface } from './Interface';
-import { Store } from './Store';
+import { Interface } from './Interface'
+import { Store } from './Store'
+
+import './style.css'
 
 const store = new Store()
 
@@ -16,4 +17,4 @@ ReactDOM.render(
         </Provider>
     <DevTools />
     </div>,
-    document.getElementById('root'));
+    document.getElementById('root'))

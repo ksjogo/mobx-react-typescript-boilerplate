@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { observer, inject } from 'mobx-react'
-import {Store} from './Store'
+import { Store } from './Store'
 
 export interface WidgetProps {
     store?: Store,
