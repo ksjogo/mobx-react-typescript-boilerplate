@@ -3,7 +3,7 @@ import * as socketIo from 'socket.io'
 type Socket = SocketIO.Socket
 import * as cors from 'cors'
 import * as fs from 'fs'
-import { Game, applyAction, Player, Deed } from './Game'
+import { Game, applyAction, Deed } from './Game'
 import * as _ from 'lodash'
 import { Message, MessageType } from './Message'
 
@@ -57,7 +57,7 @@ function disconnect (socket: Socket) {
 function broadcast () {
     const data: Message = { type: MessageType.GameState, data: JSON.stringify(game) }
     sockets.forEach(s => {
-        console.log("broaded")
+        console.log('broaded')
         s.send(data)
     })
 }

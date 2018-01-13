@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { observer, inject } from 'mobx-react'
 import Widget from './Widget'
-import ReactHeatmap from 'react-heatmap.js'
 
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
+import { Map, Marker, TileLayer } from 'react-leaflet'
 import HeatmapLayer from 'react-leaflet-heatmap-layer'
 
 import * as data from '../heatmap/crimes_count.json'
@@ -35,7 +34,7 @@ const policeIcon = L.icon({
 export class Heatmap extends Widget {
     render () {
         return <div>
-            <Map center={[41.84,-87.67]} zoom={12} style={{height: '100%', width: '100%'}}>
+            <Map center={[41.84,-87.67]} zoom={12} style={{ height: '100%', width: '100%' }}>
                 <HeatmapLayer
                     fitBoundsOnLoad
                     fitBoundsOnUpdate

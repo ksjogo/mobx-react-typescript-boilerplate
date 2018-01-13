@@ -1,14 +1,13 @@
 import { observable } from 'mobx'
-import { type } from 'os';
 
 export enum PlayerType {
     Police = 1,
     Criminal = 2,
 }
 
-type Position = {lat: Number, lng: Number}
+type Position = {lat: number, lng: number}
 function pos (y, x): Position {
-    return {lat: y, lng: x}
+    return { lat: y, lng: x }
 }
 
 export class Player {
@@ -45,5 +44,9 @@ export class Action {
 
 export function applyAction (game: Game, action: Action): Game {
     game.count++
-                return game
+    game.police.position.lat += (2 * Math.random() - 1) * 0.02
+    game.police.position.lng += (2 * Math.random() - 1) * 0.02
+    game.thief.position.lat += (2 * Math.random() - 1) * 0.02
+    game.thief.position.lng += (2 * Math.random() - 1) * 0.02
+    return game
 }
