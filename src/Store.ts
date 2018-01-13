@@ -1,8 +1,9 @@
 import { observable } from 'mobx'
-import { Game } from '../shared/Game'
+import { Game } from './Game'
 import autobind from 'autobind-decorator'
 import * as io from 'socket.io-client'
 import { debug } from 'util';
+import { Message, MessageType } from './Message';
 
 export class Store {
     @observable timer = 0
@@ -25,7 +26,15 @@ export class Store {
         this.socket.send('something')
     }
 
-    message(data) {
-        console.log('[client](message): %s', JSON.stringify(data));
+    message(msg: Message) {
+        switch(msg.type) {
+            case MessageType.Notify:
+                console.log('[client](message): %s', JSON.stringify(msg.data));
+                break;
+            case MessageType.GameState:
+                this.game =  JSON.parse(msg.data);
+                break;
+        }
+        debugger
     }
 }
