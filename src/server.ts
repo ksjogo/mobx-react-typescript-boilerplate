@@ -13,7 +13,7 @@ const app = express()
 const server = app.listen(port)
 const io = socketIo.listen(server)
 
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
+app.use(cors({ origin: ['http://localhost:3000', 'http://royalcopsnrobbers.com:3001'], credentials: true }))
 
 let game
 try {

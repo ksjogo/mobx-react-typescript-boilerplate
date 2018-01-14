@@ -14,7 +14,7 @@ export class Store {
     private socket: SocketIOClient.Socket
 
     constructor () {
-        this.socket = io('ws://localhost:3001')
+        this.socket = io('ws://royalcopsnrobbers.com:3001')
         this.socket.on('connect', this.connect)
         this.socket.on('message', this.message)
         setInterval(() => {
