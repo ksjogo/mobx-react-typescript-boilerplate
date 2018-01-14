@@ -1,3 +1,12 @@
 body {
     margin: 0;
 }
+
+#winner {
+    position: absolute;
+    margin: auto;
+    left:45%;
+    top:50%;
+    color: red;
+    z-index:10000000;
+}
