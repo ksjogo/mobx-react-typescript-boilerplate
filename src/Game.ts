@@ -1,6 +1,7 @@
 import { observable, computed } from 'mobx'
 import * as  _ from 'lodash'
 import * as dropData from '../heatmap/moneydrops.json'
+import { type } from 'os';
 
 const drops = (dropData as any).map(p => pos(p[0],p[1]))
 
@@ -9,8 +10,9 @@ function drop (): Position {
 }
 
 export enum PlayerType {
-    Police = 1,
-    Criminal = 2,
+    Neutral = "Neutral",
+    Police = "Police",
+    Criminal = "Criminal",
 }
 
 type Position = {lat: number, lng: number}
@@ -18,10 +20,14 @@ function pos (y, x): Position {
     return { lat: y, lng: x }
 }
 
+function dist (a: Position, b: Position): number {
+    return Math.sqrt((a.lat - b.lat) ** 2 + (a.lng - b.lng) ** 2)
+}
+
 export class Player {
     type: PlayerType
     position: Position
-    move (action: Action) {
+    move (action: Action, game: Game) {
         action.argument /= 100
         switch (action.deed) {
             case Deed.East:
@@ -37,6 +43,17 @@ export class Player {
                 this.position.lat -= action.argument
                 break
             case Deed.Special:
+                switch (this.type) {
+                    case(PlayerType.Criminal):
+                        game.drops = _.filter(game.drops, x => dist(x, this.position) > 0.03)
+                        if (game.drops.length === 0)
+                            game.winner = PlayerType.Criminal
+                        break
+                    case(PlayerType.Police):
+                        if (dist(game.thief.position, this.position) <= 0.02)
+                            game.winner = PlayerType.Police
+                        break
+                }
                 break
         }
     }
@@ -45,8 +62,8 @@ export class Player {
 export class Thief extends Player {
     type = PlayerType.Criminal
     position = drop() // (41.88, -87.67)
-    move (action) {
-        super.move(action)
+    move (action, game) {
+        super.move(action, game)
     }
 }
 
@@ -59,6 +76,9 @@ export class Game {
     @observable
     count = 0
 
+    @observable
+    winner= PlayerType.Neutral
+
     @observable.deep
     police = new Police()
 
@@ -68,9 +88,12 @@ export class Game {
     @observable
     drops: Position[] = _.range(5).map(x => drop())
 
+    @observable
+    collectedDrops: Position[] = []
+
     @computed
     get distance (): number {
-        return Math.sqrt((this.thief.position.lat - this.police.position.lat) ** 2 + (this.thief.position.lng - this.police.position.lng) ** 2)
+        return dist(this.thief.position, this.police.position)
     }
 }
 
@@ -90,7 +113,7 @@ export class Action {
 
 export function applyAction (game: Game, action: Action): Game {
     game.count++
-    action.player.move(action)
+    action.player.move(action, game)
     /* game.police.position.lat += (2 * Math.random() - 1) * 0.02
      * game.police.position.lng += (2 * Math.random() - 1) * 0.02
      * game.thief.position.lat += (2 * Math.random() - 1) * 0.02

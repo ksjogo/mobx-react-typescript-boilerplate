@@ -54,20 +54,49 @@ function disconnect (socket: Socket) {
     }
 }
 
+let lastSend = Date.now()
+let skipped = true
+
+function checker () {
+    if (skipped)
+        broadcast()
+}
+setInterval(checker, 500)
+
 function broadcast () {
-    const data: Message = { type: MessageType.GameState, data: JSON.stringify(game) }
+    let date = Date.now()
+    if (date < lastSend + 500) {
+        skipped = true
+        return
+    }
+
+    skipped = false
+    lastSend = Date.now()
+
+    let places = 4
+    let json = JSON.stringify(game, function (key, value) {
+        if (typeof value === 'number') {
+            return parseFloat(value.toFixed(places))
+        }
+        return value
+    })
+
+    const data: Message = { type: MessageType.GameState, data: json }
+    console.log('broaded', Date.now())
     sockets.forEach(s => {
-        console.log('broaded')
         s.send(data)
     })
+
+    lastSend = Date.now()
 }
 
 app.get('/:player/:action/:argument', (request, response) => {
     let playerId = request.params.player
-    let player = playerId == 0 ? game.police : game.thief
+    let player = parseInt(playerId,10) === 0 ? game.police : game.thief
     let action = request.params.action as Deed
-    let argument = request.params.argument
-    game = applyAction(game, { player: game.police, deed: action, argument: argument })
+    let argument = parseInt(request.params.argument,10)
+    console.log(playerId, action, argument);
+    game = applyAction(game, { player: player, deed: action, argument: argument })
     let distance = Math.min(game.distance > 0.01 ? game.distance * 255 : 0, 255)
     response.send(JSON.stringify(Math.floor(distance)))
     broadcast()
