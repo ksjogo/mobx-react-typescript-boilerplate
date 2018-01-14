@@ -1,7 +1,14 @@
 import { observable, computed } from 'mobx'
-import * as  _ from 'lodash'
+import * as _ from 'lodash'
 import * as dropData from '../heatmap/moneydrops.json'
-import { type } from 'os';
+
+export enum Deed {
+    East = 'east',
+    West = 'west',
+    North = 'north',
+    South = 'south',
+    Special = 'special',
+}
 
 const drops = (dropData as any).map(p => pos(p[0],p[1]))
 
@@ -10,9 +17,9 @@ function drop (): Position {
 }
 
 export enum PlayerType {
-    Neutral = "Neutral",
-    Police = "Police",
-    Criminal = "Criminal",
+    Neutral = 'Neutral',
+    Police = 'Police',
+    Criminal = 'Criminal',
 }
 
 type Position = {lat: number, lng: number}
@@ -77,7 +84,7 @@ export class Game {
     count = 0
 
     @observable
-    winner= PlayerType.Neutral
+    winner = PlayerType.Neutral
 
     @observable.deep
     police = new Police()
@@ -95,14 +102,6 @@ export class Game {
     get distance (): number {
         return dist(this.thief.position, this.police.position)
     }
-}
-
-export enum Deed {
-    East = 'east',
-    West = 'west',
-    North = 'north',
-    South = 'south',
-    Special = 'special',
 }
 
 export class Action {

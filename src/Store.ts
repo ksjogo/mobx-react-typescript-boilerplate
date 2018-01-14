@@ -1,5 +1,5 @@
 import { observable } from 'mobx'
-import { Game } from './Game'
+import { Game, PlayerType } from './Game'
 import autobind from 'autobind-decorator'
 import * as io from 'socket.io-client'
 import { Message, MessageType } from './Message'
@@ -10,6 +10,8 @@ export class Store {
     @observable.deep game: Game = null
 
     @observable ready = false
+
+    @observable perspective: PlayerType = null
 
     private socket: SocketIOClient.Socket
 

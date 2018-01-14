@@ -10,6 +10,7 @@ import * as data from '../heatmap/crimes_count.json'
 import '../node_modules/leaflet/dist/leaflet.css'
 
 import * as L from 'leaflet'
+import { PlayerType } from './Game'
 
 /* delete L.Icon.Default.prototype._getIconUrl;
  * L.Icon.Default.mergeOptions({
@@ -51,18 +52,20 @@ export class Heatmap extends Widget {
                     url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png'
                     attribution='<a href="http://cartodb.com/attributions">CartoDB</a>'
         />
-        <Marker
+        {this.props.store.perspective !== PlayerType.Criminal &&
+         <Marker
             position={this.props.store.game.police.position}
             icon={policeIcon}
-        />
-        <Marker
+            />}
+        {this.props.store.perspective !== PlayerType.Police &&
+         <Marker
             position={this.props.store.game.thief.position}
-            icon={thiefIcon}
-        />
+        icon={thiefIcon}
+            />}
         {this.props.store.game.drops.map(pos => {return <Marker
-            position={pos}
-            icon={treasureIcon}
-            />})}
+                                       position={pos}
+                                       icon={treasureIcon}
+        />})}
             </Map>
         </div>
     }
