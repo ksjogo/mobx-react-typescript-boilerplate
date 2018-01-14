@@ -62,4 +62,5 @@ if __name__ == "__main__":
                 if special_flag:
                     d = action(player, "special", 1)
             # print(f"Distance: {d}")
-            ser.write(d)
+            ser.write(str(d).encode('utf-8'))
+            ser.write('\n'.encode('utf-8'))
